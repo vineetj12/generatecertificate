@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  companyId String   @map("company_id")
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("admins")
+}
+
+model Company {
+  id                String   @id @default(uuid())
+  name              String
+  address           String   @default("")
+  website           String?
+  email             String?
+  logoPath          String?  @map("logo_path")
+  signaturePath     String?  @map("signature_path")
+  directorName      String?  @map("director_name")
+  certificatePrefix String   @default("COMP") @map("certificate_prefix")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  admins            Admin[]
+  certificates      Certificate[]
+  activityLogs      ActivityLog[]
+
+  @@map("companies")
+}
+
+model Certificate {
+  id              String    @id @default(uuid())
+  certificateId   String    @unique @map("certificate_id")
+  studentName     String    @map("student_name")
+  collegeName     String?   @map("college_name")
+  course          String?   @map("course")
+  internshipRole  String    @map("internship_role")
+  projectName     String?   @map("project_name")
+  startDate       DateTime  @map("start_date")
+  endDate         DateTime  @map("end_date")
+  description     String    @db.Text
+  templateType    String    @default("classic") @map("template_type")
+  pdfPath         String?   @map("pdf_path")
+  qrCodePath      String?   @map("qr_code_path")
+  logoPath        String?   @map("logo_path")
+  signaturePath   String?   @map("signature_path")
+  issueDate       DateTime  @default(now()) @map("issue_date")
+  status          String    @default("valid")
+  emailSent       Boolean   @default(false) @map("email_sent")
+  emailSentAt     DateTime? @map("email_sent_at")
+  studentEmail    String?   @map("student_email")
+  companyId       String    @map("company_id")
+  company         Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([studentName])
+  @@index([certificateId])
+  @@index([createdAt])
+  @@map("certificates")
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  action    String
+  details   String?  @db.Text
+  adminId   String?  @map("admin_id")
+  companyId String?  @map("company_id")
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@map("activity_logs")
+}
