@@ -52,10 +52,6 @@ model Certificate {
   endDate         DateTime  @map("end_date")
   description     String    @db.Text
   templateType    String    @default("classic") @map("template_type")
-  pdfPath         String?   @map("pdf_path")
-  qrCodePath      String?   @map("qr_code_path")
-  logoPath        String?   @map("logo_path")
-  signaturePath   String?   @map("signature_path")
   issueDate       DateTime  @default(now()) @map("issue_date")
   status          String    @default("valid")
   emailSent       Boolean   @default(false) @map("email_sent")

@@ -10,14 +10,7 @@ export interface Certificate {
   endDate: string;
   description: string;
   templateType: string;
-  pdfPath: string | null;
   pdfUrl: string | null;
-  qrCodePath: string | null;
-  qrCodeUrl: string | null;
-  logoPath: string | null;
-  logoUrl: string | null;
-  signaturePath: string | null;
-  signatureUrl: string | null;
   issueDate: string;
   status: string;
   internPhone: string | null;

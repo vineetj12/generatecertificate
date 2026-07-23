@@ -48,7 +48,6 @@ export async function create(req: AuthRequest, res: Response): Promise<void> {
       data: {
         ...certificate,
         pdfUrl: `${baseUrl}/api/certificate/download/${certificate.id}`,
-        qrCodeUrl: null,
       },
       message: `Certificate ${certificate.certificateId} generated successfully`,
     });
@@ -75,9 +74,6 @@ export async function getById(req: AuthRequest, res: Response): Promise<void> {
       data: {
         ...certificate,
         pdfUrl: `${baseUrl}/api/certificate/download/${certificate.id}`,
-        qrCodeUrl: null,
-        logoUrl: certificate.logoPath ? `${baseUrl}/uploads/${certificate.logoPath}` : null,
-        signatureUrl: certificate.signaturePath ? `${baseUrl}/uploads/${certificate.signaturePath}` : null,
       },
     });
   } catch (error: any) {
@@ -104,9 +100,6 @@ export async function list(req: AuthRequest, res: Response): Promise<void> {
     const certificates = result.certificates.map((cert) => ({
       ...cert,
       pdfUrl: `${baseUrl}/api/certificate/download/${cert.id}`,
-      qrCodeUrl: null,
-      logoUrl: cert.logoPath ? `${baseUrl}/uploads/${cert.logoPath}` : null,
-      signatureUrl: cert.signaturePath ? `${baseUrl}/uploads/${cert.signaturePath}` : null,
     }));
 
     res.json({

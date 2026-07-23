@@ -70,18 +70,16 @@ export async function generateCertificatePDFBuffer(certificateId: string): Promi
 
   const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
 
-  // Convert images to base64 for embedding
-  const effectiveLogoPath = certificate.logoPath || company.logoPath;
-  const logoBase64 = effectiveLogoPath
-    ? (effectiveLogoPath.startsWith('data:') 
-       ? effectiveLogoPath 
-       : fileToBase64(path.join(uploadsDir, effectiveLogoPath)))
+  // Convert images to base64 for embedding (always use company branding)
+  const logoBase64 = company.logoPath
+    ? (company.logoPath.startsWith('data:')
+       ? company.logoPath
+       : fileToBase64(path.join(uploadsDir, company.logoPath)))
     : '';
-  const effectiveSignaturePath = certificate.signaturePath || company.signaturePath;
-  const signatureBase64 = effectiveSignaturePath
-    ? (effectiveSignaturePath.startsWith('data:') 
-       ? effectiveSignaturePath 
-       : fileToBase64(path.join(uploadsDir, effectiveSignaturePath)))
+  const signatureBase64 = company.signaturePath
+    ? (company.signaturePath.startsWith('data:')
+       ? company.signaturePath
+       : fileToBase64(path.join(uploadsDir, company.signaturePath)))
     : '';
 
   // Generate QR code as data URL

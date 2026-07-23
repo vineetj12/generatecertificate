@@ -11,8 +11,6 @@ export interface CreateCertificateInput {
   endDate: string;
   description: string;
   templateType?: string;
-  logoPath?: string;
-  signaturePath?: string;
   internPhone?: string;
 }
 
@@ -50,10 +48,6 @@ export async function createCertificate(input: CreateCertificateInput, companyId
           endDate: new Date(input.endDate),
           description: input.description,
           templateType: input.templateType || 'classic',
-          qrCodePath: null,
-          pdfPath: null,
-          logoPath: input.logoPath || null,
-          signaturePath: input.signaturePath || null,
           internPhone: input.internPhone || null,
           companyId,
         },
