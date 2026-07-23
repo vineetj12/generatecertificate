@@ -6,6 +6,7 @@ import { Company } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PhoneInput } from '@/components/ui/phone-input';
 import {
   Save,
   Upload,
@@ -13,8 +14,8 @@ import {
   Image as ImageIcon,
   Pen,
   CheckCircle,
-  Phone,
 } from 'lucide-react';
+
 
 export default function SettingsPage() {
   const [company, setCompany] = useState<Partial<Company>>({});
@@ -250,11 +251,10 @@ export default function SettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-slate-300">Phone Number</Label>
-                <Input
+                <PhoneInput
                   value={company.phone || ''}
-                  onChange={(e) => setCompany({ ...company, phone: e.target.value })}
-                  placeholder="+1 (555) 000-0000"
-                  className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5"
+                  onChange={(val) => setCompany({ ...company, phone: val })}
+                  placeholder="0000 000 000"
                 />
               </div>
               <div className="space-y-2">

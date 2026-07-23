@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { RichTextEditor } from '@/components/rich-text-editor';
 import { Badge } from '@/components/ui/badge';
+import { PhoneInput } from '@/components/ui/phone-input';
 import {
   ArrowLeft,
   Download,
@@ -24,6 +25,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import Link from 'next/link';
+
 
 const formSchema = z.object({
   studentName: z.string().min(1, 'Student name is required'),
@@ -93,11 +95,13 @@ export default function NewCertificatePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [success, setSuccess] = useState<{ id: string; certificateId: string } | null>(null);
+  const [internPhone, setInternPhone] = useState('');
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -261,7 +265,14 @@ export default function NewCertificatePage() {
                   </div>
                   <div className="space-y-2">
                     <Label className="text-slate-300">Intern Phone Number</Label>
-                    <Input {...register('internPhone')} placeholder="e.g. +91 98765 43210" className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5" />
+                    <PhoneInput
+                      value={internPhone}
+                      onChange={(val) => {
+                        setInternPhone(val);
+                        setValue('internPhone', val);
+                      }}
+                      placeholder="0000 000 000"
+                    />
                   </div>
                 </div>
               </div>
