@@ -10,10 +10,9 @@ export async function generateCertificateId(companyId: string): Promise<string> 
   const prefix = company?.certificatePrefix || 'COMP';
   const year = new Date().getFullYear();
 
-  // Find the latest certificate for this company and year
+  // Find the latest certificate globally for this prefix and year
   const latestCert = await prisma.certificate.findFirst({
     where: {
-      companyId,
       certificateId: {
         startsWith: `${prefix}-${year}-`,
       },
@@ -26,8 +25,10 @@ export async function generateCertificateId(companyId: string): Promise<string> 
   let sequence = 1;
   if (latestCert) {
     const parts = latestCert.certificateId.split('-');
-    const lastSequence = parseInt(parts[2], 10);
-    sequence = lastSequence + 1;
+    const lastSequence = parseInt(parts[parts.length - 1], 10);
+    if (!isNaN(lastSequence)) {
+      sequence = lastSequence + 1;
+    }
   }
 
   const paddedSequence = sequence.toString().padStart(6, '0');

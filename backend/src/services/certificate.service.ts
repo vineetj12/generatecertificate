@@ -32,39 +32,58 @@ export async function createCertificate(input: CreateCertificateInput, companyId
     );
   }
 
-  // Generate unique certificate ID scoped to this company
-  const certificateId = await generateCertificateId(companyId);
+  let certificate: any = null;
+  let retries = 5;
+  while (retries > 0) {
+    const certificateId = await generateCertificateId(companyId);
+    try {
+      // Create certificate record
+      certificate = await prisma.certificate.create({
+        data: {
+          certificateId,
+          studentName: input.studentName,
+          collegeName: input.collegeName || null,
+          course: input.course || null,
+          internshipRole: input.internshipRole,
+          projectName: input.projectName || null,
+          startDate: new Date(input.startDate),
+          endDate: new Date(input.endDate),
+          description: input.description,
+          templateType: input.templateType || 'classic',
+          qrCodePath: null,
+          pdfPath: null,
+          logoPath: input.logoPath || null,
+          signaturePath: input.signaturePath || null,
+          internPhone: input.internPhone || null,
+          companyId,
+        },
+      });
 
-  // Create certificate record
-  const certificate = await prisma.certificate.create({
-    data: {
-      certificateId,
-      studentName: input.studentName,
-      collegeName: input.collegeName || null,
-      course: input.course || null,
-      internshipRole: input.internshipRole,
-      projectName: input.projectName || null,
-      startDate: new Date(input.startDate),
-      endDate: new Date(input.endDate),
-      description: input.description,
-      templateType: input.templateType || 'classic',
-      qrCodePath: null,
-      pdfPath: null,
-      logoPath: input.logoPath || null,
-      signaturePath: input.signaturePath || null,
-      internPhone: input.internPhone || null,
-      companyId,
-    },
-  });
+      // Log activity
+      await prisma.activityLog.create({
+        data: {
+          action: 'created',
+          details: `Certificate ${certificateId} generated for ${input.studentName}`,
+          companyId,
+        },
+      });
 
-  // Log activity
-  await prisma.activityLog.create({
-    data: {
-      action: 'created',
-      details: `Certificate ${certificateId} generated for ${input.studentName}`,
-      companyId,
-    },
-  });
+      break;
+    } catch (error: any) {
+      if (error.code === 'P2002' && error.meta?.target?.includes('certificate_id')) {
+        retries--;
+        if (retries === 0) {
+          throw error;
+        }
+        continue;
+      }
+      throw error;
+    }
+  }
+
+  if (!certificate) {
+    throw new Error('Failed to generate a unique certificate ID after multiple attempts');
+  }
 
   return certificate;
 }
