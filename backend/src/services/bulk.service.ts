@@ -12,7 +12,7 @@ export interface BulkRow {
   endDate: string;
   description: string;
   templateType?: string;
-
+  internPhone?: string;
 }
 
 export interface BulkResult {
@@ -62,6 +62,12 @@ const COLUMN_MAP: Record<string, string> = {
   'course': 'course',
   'degree': 'course',
   'course_name': 'course',
+  'intern phone': 'internPhone',
+  'intern_phone': 'internPhone',
+  'internphone': 'internPhone',
+  'phone': 'internPhone',
+  'phonenumber': 'internPhone',
+  'phone_number': 'internPhone',
 };
 
 function normalizeColumnName(name: string): string {
@@ -127,6 +133,7 @@ export async function bulkGenerateCertificates(
         endDate: String(row.endDate),
         description: String(row.description),
         templateType: row.templateType || 'classic',
+        internPhone: row.internPhone ? String(row.internPhone).trim() : undefined,
       };
 
       const certificate = await createCertificate(input, companyId);
@@ -178,6 +185,7 @@ export function generateSampleTemplate(): Buffer {
       endDate: '2026-07-03',
       description: 'The internship certificate for a <strong>MERN Stack developer</strong> signifies successful completion of a hands-on development internship program from <strong>03-jan-2026 to 03-july-2026</strong>. During this period, he has demonstrated a strong understanding of <strong>Next.JS, Node, Express.js</strong> and contributed to the development of <strong>LookIntern Project</strong>.',
       templateType: 'andro',
+      internPhone: '9876543210',
     },
     {
       studentName: 'Jane Smith',
@@ -189,6 +197,7 @@ export function generateSampleTemplate(): Buffer {
       endDate: '2026-07-31',
       description: 'This certificate is proudly awarded to Jane Smith for successfully completing a UI/UX Design Internship.',
       templateType: 'modern',
+      internPhone: '9876543211',
     },
   ];
 

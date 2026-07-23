@@ -20,7 +20,7 @@ export interface Certificate {
   signatureUrl: string | null;
   issueDate: string;
   status: string;
-
+  internPhone: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -31,6 +31,7 @@ export interface Company {
   address: string;
   website: string | null;
   email: string | null;
+  phone: string | null;
   logoPath: string | null;
   logoUrl: string | null;
   signaturePath: string | null;

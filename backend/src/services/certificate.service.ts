@@ -13,6 +13,7 @@ export interface CreateCertificateInput {
   templateType?: string;
   logoPath?: string;
   signaturePath?: string;
+  internPhone?: string;
 }
 
 export async function createCertificate(input: CreateCertificateInput, companyId: string) {
@@ -51,6 +52,7 @@ export async function createCertificate(input: CreateCertificateInput, companyId
       pdfPath: null,
       logoPath: input.logoPath || null,
       signaturePath: input.signaturePath || null,
+      internPhone: input.internPhone || null,
       companyId,
     },
   });

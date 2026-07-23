@@ -24,6 +24,7 @@ import {
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
+  Phone,
 } from 'lucide-react';
 
 export default function SignupPage() {
@@ -43,6 +44,7 @@ export default function SignupPage() {
   const [companyAddress, setCompanyAddress] = useState('');
   const [companyWebsite, setCompanyWebsite] = useState('');
   const [companyEmail, setCompanyEmail] = useState('');
+  const [companyPhone, setCompanyPhone] = useState('');
   const [directorName, setDirectorName] = useState('');
   const [certificatePrefix, setCertificatePrefix] = useState('');
 
@@ -133,6 +135,7 @@ export default function SignupPage() {
         companyAddress,
         companyWebsite: companyWebsite || undefined,
         companyEmail: companyEmail || undefined,
+        companyPhone: companyPhone || undefined,
         directorName: directorName || undefined,
         certificatePrefix,
         logoData: logoData || undefined,
@@ -402,6 +405,20 @@ export default function SignupPage() {
                       placeholder="info@acme.com"
                       value={companyEmail}
                       onChange={(e) => setCompanyEmail(e.target.value)}
+                      className="bg-white/[0.03] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500/50 h-12 rounded-xl pl-11"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-slate-400 font-medium">Company Phone Number (Optional)</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
+                    <Input
+                      type="tel"
+                      placeholder="+1 (555) 000-0000"
+                      value={companyPhone}
+                      onChange={(e) => setCompanyPhone(e.target.value)}
                       className="bg-white/[0.03] border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500/50 h-12 rounded-xl pl-11"
                     />
                   </div>

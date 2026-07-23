@@ -26,6 +26,7 @@ model Company {
   address           String   @default("")
   website           String?
   email             String?
+  phone             String?
   logoPath          String?  @map("logo_path")
   signaturePath     String?  @map("signature_path")
   directorName      String?  @map("director_name")
@@ -60,6 +61,7 @@ model Certificate {
   emailSent       Boolean   @default(false) @map("email_sent")
   emailSentAt     DateTime? @map("email_sent_at")
   studentEmail    String?   @map("student_email")
+  internPhone     String?   @map("intern_phone")
   companyId       String    @map("company_id")
   company         Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
   createdAt       DateTime  @default(now()) @map("created_at")

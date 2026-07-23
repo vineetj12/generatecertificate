@@ -16,6 +16,7 @@ async function main() {
       address: '123 Innovation Drive, Silicon Valley, CA 94025',
       website: 'https://techcorp.com',
       email: 'info@techcorp.com',
+      phone: '1234567890',
       directorName: 'John Smith',
       certificatePrefix: 'TECH',
     },

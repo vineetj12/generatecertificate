@@ -34,7 +34,7 @@ const formSchema = z.object({
   startDate: z.string().min(1, 'Start date is required'),
   endDate: z.string().min(1, 'End date is required'),
   templateType: z.string(),
-
+  internPhone: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -254,10 +254,16 @@ export default function NewCertificatePage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
                     <Label className="text-slate-300">College / University</Label>
                     <Input {...register('collegeName')} placeholder="e.g. JC Bose University" className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5" />
                   </div>
+                  <div className="space-y-2">
+                    <Label className="text-slate-300">Intern Phone Number</Label>
+                    <Input {...register('internPhone')} placeholder="e.g. +91 98765 43210" className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5" />
+                  </div>
+                </div>
               </div>
 
               {/* Form Section 2: Internship Details */}

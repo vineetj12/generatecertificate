@@ -13,6 +13,7 @@ import {
   Image as ImageIcon,
   Pen,
   CheckCircle,
+  Phone,
 } from 'lucide-react';
 
 export default function SettingsPage() {
@@ -49,6 +50,7 @@ export default function SettingsPage() {
         address: company.address,
         website: company.website,
         email: company.email,
+        phone: company.phone,
         directorName: company.directorName,
         certificatePrefix: company.certificatePrefix,
       });
@@ -245,14 +247,25 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-slate-300">Director / Signatory Name</Label>
-              <Input
-                value={company.directorName || ''}
-                onChange={(e) => setCompany({ ...company, directorName: e.target.value })}
-                placeholder="John Smith"
-                className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-slate-300">Phone Number</Label>
+                <Input
+                  value={company.phone || ''}
+                  onChange={(e) => setCompany({ ...company, phone: e.target.value })}
+                  placeholder="+1 (555) 000-0000"
+                  className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-slate-300">Director / Signatory Name</Label>
+                <Input
+                  value={company.directorName || ''}
+                  onChange={(e) => setCompany({ ...company, directorName: e.target.value })}
+                  placeholder="John Smith"
+                  className="glass-input h-11 focus-visible:ring-0 text-white rounded-xl placeholder-slate-600 border-white/5"
+                />
+              </div>
             </div>
 
             <Button onClick={handleSave} isLoading={saving} className="bg-gradient-to-r from-violet-600 to-indigo-600 border-0 h-12 shadow-lg shadow-indigo-500/20 rounded-xl font-semibold w-full sm:w-auto px-6 mt-4">

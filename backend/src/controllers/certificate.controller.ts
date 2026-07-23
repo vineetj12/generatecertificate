@@ -24,7 +24,7 @@ const createCertificateSchema = z.object({
   endDate: z.string().min(1, 'End date is required'),
   description: z.string().min(1, 'Description is required'),
   templateType: z.enum(['classic', 'modern', 'elegant', 'andro']).optional().default('classic'),
-
+  internPhone: z.string().optional(),
 });
 
 export async function create(req: AuthRequest, res: Response): Promise<void> {

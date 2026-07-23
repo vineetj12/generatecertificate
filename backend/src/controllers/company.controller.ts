@@ -27,7 +27,7 @@ export async function getCompany(req: AuthRequest, res: Response): Promise<void>
 export async function updateCompany(req: AuthRequest, res: Response): Promise<void> {
   try {
     const companyId = req.admin!.companyId;
-    const { name, address, website, email, directorName, certificatePrefix } = req.body;
+    const { name, address, website, email, phone, directorName, certificatePrefix } = req.body;
 
     const company = await prisma.company.update({
       where: { id: companyId },
@@ -36,6 +36,7 @@ export async function updateCompany(req: AuthRequest, res: Response): Promise<vo
         ...(address !== undefined && { address }),
         ...(website !== undefined && { website }),
         ...(email !== undefined && { email }),
+        ...(phone !== undefined && { phone }),
         ...(directorName !== undefined && { directorName }),
         ...(certificatePrefix && { certificatePrefix }),
       },

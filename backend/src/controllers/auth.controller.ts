@@ -19,6 +19,7 @@ const signupSchema = z.object({
   companyAddress: z.string().optional().default(''),
   companyWebsite: z.string().optional(),
   companyEmail: z.string().email().optional().or(z.literal('')),
+  companyPhone: z.string().optional(),
   directorName: z.string().optional(),
   certificatePrefix: z.string().min(1).max(6).optional().default('COMP'),
   // Base64 data URLs for logo and signature (optional)
@@ -115,6 +116,7 @@ export async function signup(req: Request, res: Response): Promise<void> {
         address: data.companyAddress || '',
         website: data.companyWebsite || null,
         email: data.companyEmail || null,
+        phone: data.companyPhone || null,
         directorName: data.directorName || null,
         certificatePrefix: data.certificatePrefix?.toUpperCase() || 'COMP',
         logoPath: data.logoData || null,
